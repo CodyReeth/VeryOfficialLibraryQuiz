@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Which U of R Library Defines You?</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Landing Screen -->
+    <div id="landing" class="screen active">
+        <div class="container">
+            <h1>Which University of Rochester Library Best Defines You?</h1>
+            <button id="begin-btn" class="btn-primary">Begin</button>
+        </div>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div id="quiz" class="screen">
+        <div class="container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <p class="progress-text" id="progress-text">1 / 12</p>
+            <div id="question-area">
+                <h2 id="question-text"></h2>
+                <div class="slider-container">
+                    <input type="range" id="slider" min="-2" max="2" step="1" value="0">
+                    <div class="slider-labels">
+                        <span>Strongly Disagree</span>
+                        <span>Disagree</span>
+                        <span>Neutral</span>
+                        <span>Agree</span>
+                        <span>Strongly Agree</span>
+                    </div>
+                </div>
+            </div>
+            <button id="next-btn" class="btn-primary">Next</button>
+        </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="result" class="screen">
+        <div class="container">
+            <div id="result-card">
+                <div class="result-emoji" id="result-emoji"></div>
+                <h2 id="result-name"></h2>
+                <p class="result-tagline" id="result-tagline"></p>
+                <p class="result-description" id="result-description"></p>
+                <div class="stats-grid" id="stats-grid"></div>
+            </div>
+            <button id="retake-btn" class="btn-primary">Retake Quiz</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
