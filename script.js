@@ -1,16 +1,21 @@
 const questions = [
-    { text: "I consider myself a morning person.", key: null },
-    { text: "I have strong opinions about font choices.", key: null },
-    { text: "I always finish my homework before going out.", key: null },
-    { text: "I'd rather study with a group than alone.", key: "social" },
-    { text: "I think the dining halls are underrated.", key: null },
-    { text: "I've pulled an all-nighter at least once this semester.", key: null },
-    { text: "I enjoy subjects where there's one correct answer.", key: "stem" },
-    { text: "I judge people by their laptop stickers.", key: null },
-    { text: "I know what I'm doing after graduation.", key: null },
-    { text: "Coffee is a personality trait.", key: null },
-    { text: "I'd rather work on a passion project than study for an exam.", key: "passion" },
-    { text: "I have a go-to seat and I will fight for it.", key: null },
+    { text: "I consider myself a morning person.", key: null },              // 0
+    { text: "I have strong opinions about font choices.", key: null },       // 1
+    { text: "I always finish my homework before going out.", key: null },    // 2
+    { text: "I'd rather study with a group than alone.", key: "social" },    // 3 — REAL
+    { text: "I think the dining halls are underrated.", key: null },         // 4
+    { text: "I've pulled an all-nighter at least once this semester.", key: null }, // 5
+    { text: "I could survive a week without my phone.", key: null },         // 6 — NEW
+    { text: "I enjoy subjects where there's one correct answer.", key: "stem" }, // 7 — REAL
+    { text: "I judge people by their laptop stickers.", key: null },         // 8
+    { text: "I have been personally victimized by the tunnel system.", key: null }, // 9 — NEW
+    { text: "I know what I'm doing after graduation.", key: null },          // 10
+    { text: "My Spotify Wrapped accurately represents who I am as a person.", key: null }, // 11 — NEW
+    { text: "Coffee is a personality trait.", key: null },                    // 12
+    { text: "I'd rather work on a passion project than study for an exam.", key: "passion" }, // 13 — REAL
+    { text: "I have pretended to be on a phone call to avoid someone on campus.", key: null }, // 14 — NEW
+    { text: "I have a go-to seat and I will fight for it.", key: null },     // 15
+    { text: "The squirrels on campus are plotting something.", key: null },   // 16 — NEW
 ];
 
 const libraries = {
@@ -89,7 +94,7 @@ const libraries = {
 };
 
 const redHerringRoasts = {
-    0: { // morning person
+    0: { // morning person (index 0)
         "-2": "You sat there and carefully moved that slider all the way to Strongly Disagree for a question about being a morning person. That question did nothing. It was filler. You agonized over your sleep schedule for a website that threw your answer directly into the garbage. Your alarm clock is embarrassed for you.",
         "-1": "You nudged the slider one tick toward 'not a morning person' like you were making some nuanced philosophical statement. This question was a decoy. You could have picked anything. You could have licked the screen. Same outcome.",
         "0": "You left the slider on Neutral for the morning person question. You couldn't even muster an opinion about what time you wake up. This question was fake and somehow you still found the most boring possible answer to it.",
@@ -124,33 +129,68 @@ const redHerringRoasts = {
         "1": "You slightly agreed about all-nighters. One time. You remember the exact date. You've told the story at least four times. This question existed to catch people who romanticize sleep deprivation and you walked right into it.",
         "2": "Strongly agree. You pull all-nighters and you're PROUD. You thought this quiz was measuring your grind. It was not measuring your grind. Your eye bags are visible through the screen and this question was a lie.",
     },
-    7: { // laptop stickers
+    6: { // survive without phone (NEW)
+        "-2": "STRONGLY DISAGREE. You can't survive a week without your phone. You panicked just READING the question. You tightened your grip on your phone right now. This question was fake but the cold sweat on your palms is very real. You are a hostage to a rectangle and you just confessed it to a quiz that doesn't care.",
+        "-1": "You slightly disagreed. You think you could MAYBE last a day or two. You couldn't. You'd check your pocket eleven times in the first hour. This question meant nothing but it forced you to confront a truth about yourself that you immediately pushed back down.",
+        "0": "Neutral on phone survival. You don't know. You've never tried. You've never even CONSIDERED trying. The question asked you to imagine life without your phone and your brain produced a 404 error. This question was useless and so was your answer.",
+        "1": "You slightly agreed you could survive without your phone. Sure you could. The way a fish could 'survive' on land. Technically alive. Deeply miserable. Refreshing a phantom notification on your thigh. This question was a lie and so is your digital independence.",
+        "2": "You STRONGLY AGREE you could survive without your phone. You are either lying, Amish, or so deeply in denial that this quiz cannot help you. You answered a fake question with a fake answer. You are a fake question yourself.",
+    },
+    8: { // laptop stickers (was index 7)
         "-2": "You strongly disagreed about judging people by their laptop stickers. Your laptop is bare. Naked. A sad rectangle. You brought that energy to a question that was never going to count and somehow your answer still feels lonely.",
         "-1": "You slightly disagreed about judging stickers. You absolutely judge them. You just didn't want the quiz to know. The quiz doesn't care. The quiz was never listening. You performed restraint for an empty room.",
         "0": "Neutral on laptop stickers. You have one faded sticker from a campus event in 2023 and you've never acknowledged it. This question was equally forgettable. You were made for each other.",
         "1": "You slightly agreed about judging stickers. You've locked eyes with a stranger's ThinkPad across a lecture hall and formed a complete psychological profile. This question was bait. You bit. Hard.",
         "2": "STRONGLY AGREE. You judge people by their laptop stickers with the intensity of a forensic profiler. You saw this question and thought 'finally, someone asking the real questions.' It was the fakest question on the entire quiz. You gave your most authentic answer to our most fraudulent question.",
     },
-    8: { // after graduation
+    9: { // tunnel system (NEW)
+        "-2": "You STRONGLY DISAGREE about being victimized by the tunnels. You've never been lost. You've never wandered into a boiler room. You're either lying or you've never actually used them. This question was completely fake but your smugness about campus navigation is extremely real and extremely annoying.",
+        "-1": "You slightly disagreed. You've been mildly inconvenienced by the tunnels. A wrong turn here and there. You emerged in a building you didn't recognize and just pretended you meant to be there. This question did nothing. The tunnels also did nothing for you.",
+        "0": "Neutral on the tunnels. You've been down there exactly once during orientation and never returned. You walk outside in the Rochester winter like a martyr. This question was empty and so are the tunnels to you.",
+        "1": "You slightly agreed. The tunnels have wronged you. You've ended up in the basement of a building you've never heard of, sweating, turned around, late to class. You answered this question with the weariness of a survivor. It counted for nothing. Just like the tunnels' signage.",
+        "2": "STRONGLY AGREE. The tunnels have PERSONALLY VICTIMIZED you. You have a story. Multiple stories. You've emerged from the ground in the wrong building, blinking in the light like a mole rat, 15 minutes late. You answered this question with genuine trauma and it was a throwaway. The tunnels took your dignity and this quiz just took your time.",
+    },
+    10: { // after graduation (was index 8)
         "-2": "You strongly disagreed about knowing your post-grad plans. You grabbed that slider and dragged it to 'I am LOST' with both hands. This question was completely fake. But the existential crisis it triggered in you? That was real. You're welcome.",
         "-1": "You slightly disagreed. You have a vague plan that involves the word 'maybe' and a city you've never been to. You shared this uncertainty with a question that was designed from the ground up to waste your time.",
         "0": "Neutral on post-grad plans. You're standing at the crossroads of your life and you went 'eh.' This question was meaningless but it accidentally revealed that you'll bring that same energy to your career.",
         "1": "You slightly agreed you know your plans. You have a LinkedIn headline and a dream. This question fed on your fragile optimism and gave nothing back. Your five-year plan just became a four-year plan with a gap.",
         "2": "You STRONGLY AGREE you know what you're doing after graduation. You put that answer down with the confidence of someone whose parents already made some calls. This question was a complete fabrication, just like your sense of certainty about the future.",
     },
-    9: { // coffee personality
+    11: { // Spotify Wrapped (NEW)
+        "-2": "You STRONGLY DISAGREE that your Wrapped represents you. Your Wrapped exposed you. It showed the world that you listened to the same song 347 times in October. You saw the question and the wound reopened. This question was meaningless but the betrayal from Spotify was not.",
+        "-1": "You slightly disagreed. Your Wrapped was mostly accurate but there was something on there you can't explain. A genre you don't remember choosing. A shameful top artist. You answered this fake question while suppressing a real memory.",
+        "0": "Neutral on Wrapped. You either don't use Spotify or you looked at your Wrapped, felt nothing, and closed the app. You are immune to algorithmic self-reflection. This question was as empty as your emotional response to data about yourself.",
+        "1": "You slightly agreed your Wrapped represents you. You shared it on your story. You wanted people to see your taste. You thought this question was the quiz getting to know you. The quiz was stalling. You posted your Wrapped for validation and you answered this question for nothing.",
+        "2": "STRONGLY AGREE. Your Wrapped IS you. You screenshot it. You compare it with friends. You use it as a conversation starter in February. You answered this question with the conviction of someone whose identity is curated by an algorithm. This question was a complete waste and you treated it like therapy.",
+    },
+    12: { // coffee personality (was index 9)
         "-2": "You strongly disagreed that coffee is a personality trait. You're a tea person, aren't you. You saw this question and felt ATTACKED and you responded with force. The question was fake. Your defensiveness about hot leaf water was real.",
         "-1": "You slightly disagreed. You drink coffee but you want us to know you're not OBSESSED. You have OTHER interests. Sure you do. This question didn't count but your need to seem well-rounded has been documented.",
         "0": "Neutral on coffee as a personality trait. You have consumed caffeine and formed zero opinions about it. You are a miracle of modern apathy. This question was nothing and you matched its energy perfectly.",
         "1": "You slightly agreed. You've described your coffee order to someone who didn't ask. You've posted a picture of a latte. You thought this question would sort you into the 'quirky' category. There is no quirky category. There is only the void.",
         "2": "STRONGLY AGREE. Coffee IS your personality. You read this question and felt SEEN. Finally, a quiz that gets you. It didn't get you. It was using you. Your oat milk latte was a distraction while the real questions snuck past.",
     },
-    11: { // go-to seat
+    14: { // fake phone call (NEW)
+        "-2": "You STRONGLY DISAGREE. You've never faked a phone call to avoid someone. You just walk past people with the raw, unfiltered confidence of a sociopath. No pretense. No shield. You make eye contact and keep walking. This question was fake and apparently so is the concept of social anxiety for you.",
+        "-1": "You slightly disagreed. You haven't faked a phone call but you HAVE suddenly become very interested in something on your phone screen. You haven't called anyone but you've stared at your lock screen like it owed you money. This question was nothing. Your avoidance tactics are everything.",
+        "0": "Neutral. You neither confirm nor deny the fake phone call. That's a yes. That's absolutely a yes. You went neutral because you didn't want to ADMIT it. This question was a trap and your neutrality was a confession.",
+        "1": "You slightly agreed. Once. Maybe twice. Okay it was last week. You saw someone from a group project and your thumb was on the phone icon before your brain even processed it. 'Hey, yeah, I'm on my way.' You were standing still. This question didn't count. Your shame does.",
+        "2": "STRONGLY AGREE. You are a serial fake-caller. You have a go-to contact you pretend to call. You've developed a fake conversation script. 'Oh my god, really? No way.' The person was never on the line. This question was as fake as every phone call you've ever made on the quad. You two deserve each other.",
+    },
+    15: { // go-to seat (was index 11)
         "-2": "You strongly disagreed about having a go-to seat. You're a nomad. A wanderer. You sit in a different spot every time like you're on the run from something. This question was nothing. But your refusal to commit to a CHAIR says everything.",
         "-1": "You slightly disagreed. You don't have a go-to seat but you got a little defensive about it. Like maybe you DO have one but you don't want to be the kind of person who does. This question didn't count. Your identity crisis did.",
         "0": "Neutral on having a go-to seat. You sit where there's space. You are an ambient presence in the library. Background noise. Wallpaper. This question was equally inert. You've found your match.",
         "1": "You slightly agreed about having a go-to seat. You have a spot. You don't fight for it but you definitely do that thing where you stand near it hoping the person leaves. This question was fake and your passive-aggressive seating strategy is real.",
         "2": "STRONGLY AGREE. You have a seat and you will FIGHT for it. You have made eye contact with someone sitting in YOUR chair and contemplated genuine violence. You dragged that slider like you were defending territory. This question was completely, entirely, 100% meaningless. But you weren't. You were ready for war over a wooden chair in a public building.",
+    },
+    16: { // squirrels (NEW)
+        "-2": "You STRONGLY DISAGREE that the squirrels are plotting something. You trust the squirrels. You see them every day and you think they're just being squirrels. That is EXACTLY what they want you to think. This question was fake but your blind faith in campus wildlife is going to be your downfall.",
+        "-1": "You slightly disagreed. You think the squirrels are mostly harmless. 'Mostly.' You added that qualifier because even you have noticed them watching. Standing a little too still. This question was meaningless. The squirrels are not.",
+        "0": "Neutral on the squirrels. You refuse to take a stance on whether the campus squirrels have organized. You've seen things. You're not ready to talk about it. This question didn't count and the squirrels are counting on that.",
+        "1": "You slightly agreed. You've noticed something. A pattern. They're too bold. Too coordinated. One of them looked at you for too long last Tuesday. You answered this question cautiously because you know they're watching. This question was a decoy. But your vigilance is noted.",
+        "2": "STRONGLY AGREE. THE SQUIRRELS ARE PLOTTING SOMETHING. You answered this with the urgency of a whistleblower. You've seen them communicate. You've seen the formations. You dragged that slider to +2 like you were sounding an alarm. This question was a joke but you answered it like a manifesto. We're not saying you're wrong. We're saying this didn't count.",
     },
 };
 
