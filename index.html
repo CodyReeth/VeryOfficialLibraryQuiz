@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Which U of R Library Defines You?</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
     <!-- Landing Screen -->
@@ -54,6 +56,11 @@
                 <p id="red-herring-question"></p>
                 <p id="red-herring-answer"></p>
                 <p id="red-herring-roast"></p>
+            </div>
+            <div id="dashboard" style="display:none;">
+                <h3 id="dashboard-title">Campus-Wide Results</h3>
+                <p id="dashboard-subtitle"></p>
+                <div id="dashboard-bars"></div>
             </div>
             <button id="retake-btn" class="btn-primary">Retake Quiz</button>
         </div>

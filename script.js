@@ -1,3 +1,15 @@
+// Firebase setup
+firebase.initializeApp({
+    apiKey: "AIzaSyCrZRllzqimAAzyCUrRK-fHZ3Nv428M65k",
+    authDomain: "veryofficiallibraryquiz.firebaseapp.com",
+    projectId: "veryofficiallibraryquiz",
+    storageBucket: "veryofficiallibraryquiz.firebasestorage.app",
+    messagingSenderId: "86741648833",
+    appId: "1:86741648833:web:115178d70bca947bca5b40",
+});
+const db = firebase.firestore();
+const resultsRef = db.collection("stats").doc("results");
+
 const questions = [
     { text: "I consider myself a morning person.", key: null },              // 0
     { text: "I have strong opinions about font choices.", key: null },       // 1
@@ -300,7 +312,54 @@ function showResult() {
     document.getElementById("red-herring-answer").textContent = "Your answer: " + labels[val];
     document.getElementById("red-herring-roast").textContent = redHerringRoasts[picked][val];
 
+    // Record result to Firebase and render dashboard
+    recordAndShowDashboard(resultKey);
+
     showScreen(resultScreen);
+}
+
+function recordAndShowDashboard(resultKey) {
+    var update = { total: firebase.firestore.FieldValue.increment(1) };
+    update[resultKey] = firebase.firestore.FieldValue.increment(1);
+
+    resultsRef.update(update)
+        .then(function() { return resultsRef.get(); })
+        .then(function(doc) {
+            if (doc.exists) renderDashboard(doc.data());
+        })
+        .catch(function() {
+            // Firestore unreachable — hide dashboard, don't break the quiz
+            document.getElementById("dashboard").style.display = "none";
+        });
+}
+
+function renderDashboard(data) {
+    var total = data.total || 0;
+    if (total === 0) return;
+
+    var keys = ["stacks", "carlson", "gleason", "izone", "poa", "artmusic"];
+    var entries = keys.map(function(k) {
+        return { key: k, count: data[k] || 0, name: libraries[k].name, color: libraries[k].color };
+    });
+    entries.sort(function(a, b) { return b.count - a.count; });
+
+    document.getElementById("dashboard-subtitle").textContent = total + " students have taken this quiz";
+
+    var barsHTML = entries.map(function(e) {
+        var pct = Math.round((e.count / total) * 100);
+        return '<div class="dashboard-row">' +
+            '<div class="dashboard-row-header">' +
+                '<span class="dashboard-row-name">' + e.name + '</span>' +
+                '<span class="dashboard-row-stat">' + pct + '% (' + e.count + ')</span>' +
+            '</div>' +
+            '<div class="dashboard-bar-bg">' +
+                '<div class="dashboard-bar-fill" style="width:' + pct + '%;background:' + e.color + '"></div>' +
+            '</div>' +
+        '</div>';
+    }).join("");
+
+    document.getElementById("dashboard-bars").innerHTML = barsHTML;
+    document.getElementById("dashboard").style.display = "block";
 }
 
 beginBtn.addEventListener("click", () => {
