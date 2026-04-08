@@ -88,8 +88,75 @@ const libraries = {
     },
 };
 
+const redHerringRoasts = {
+    0: { // morning person
+        "-2": "You strongly disagree that you're a morning person. We didn't need a quiz to know that. Your alarm has given up on you.",
+        "-1": "You slightly disagree about being a morning person. So you're not a morning person but you want credit for considering it.",
+        "0": "You went neutral on being a morning person. You couldn't even commit to having an opinion about waking up. Incredible.",
+        "1": "You slightly agree you're a morning person. You set one alarm and hit snooze twice and call that 'being a morning person.'",
+        "2": "You strongly agree you're a morning person. Congrats. Nobody asked and this question didn't count for anything.",
+    },
+    1: { // font choices
+        "-2": "You strongly disagree about having font opinions. You probably use Comic Sans unironically and sleep fine at night.",
+        "-1": "You slightly disagree about font opinions. You have one but you're too embarrassed to admit it. It's okay. We all know it's Papyrus.",
+        "0": "You went neutral on font opinions. The most aggressively beige answer possible. You probably use whatever the default is.",
+        "1": "You slightly agree about having font opinions. You've definitely typed a paper in something other than Times New Roman and felt edgy about it.",
+        "2": "You strongly agree about having font opinions. You spent 20 minutes on this answer and it meant absolutely nothing.",
+    },
+    2: { // homework before going out
+        "-2": "You strongly disagree about finishing homework first. Your GPA is a vibe and your professors are concerned.",
+        "-1": "You slightly disagree about homework first. You'll 'do it later' and we both know how that ends.",
+        "0": "Neutral on homework before going out? You're the person who brings a textbook to the party and opens it zero times.",
+        "1": "You slightly agree you finish homework first. Sometimes. When the assignment is easy. And there's nothing else to do.",
+        "2": "You strongly agree you finish homework first. You put real thought into this answer and it did literally nothing. That's kind of poetic actually.",
+    },
+    4: { // dining halls
+        "-2": "You strongly disagree that dining halls are underrated. You have passionate opinions about institutional food and none of them mattered here.",
+        "-1": "You slightly disagree about dining halls. You've accepted your fate but you're not happy about it. This question was meaningless, much like dinner tonight.",
+        "0": "Neutral on dining halls. You eat there but you won't talk about it. Like a dining hall witness protection program.",
+        "1": "You slightly agree dining halls are underrated. You've found the one good station and you guard that knowledge with your life. Also this didn't count.",
+        "2": "You strongly agree dining halls are underrated. You genuinely thought this would affect your result. It didn't. But we respect the dining hall advocacy.",
+    },
+    5: { // all-nighter
+        "-2": "You strongly disagree about pulling all-nighters. Either you have incredible time management or you're lying. This question was fake either way.",
+        "-1": "You slightly disagree about all-nighters. You've stayed up until 2am and called it 'basically an all-nighter' to your friends.",
+        "0": "Neutral on all-nighters? How do you go neutral on this? You either have or you haven't. This indecisiveness is concerning.",
+        "1": "You slightly agree about all-nighters. One time. It was finals. You still talk about it. This question didn't count.",
+        "2": "You strongly agree about all-nighters. You're proud of your sleep deprivation. That's not the flex you think it is, and also it was irrelevant.",
+    },
+    7: { // laptop stickers
+        "-2": "You strongly disagree about judging laptop stickers. Your laptop is probably naked. Cold. Undecorated. Like your personality.",
+        "-1": "You disagree about judging stickers. You say you don't judge but you absolutely noticed the guy with the 'Live Laugh Code' sticker.",
+        "0": "Neutral on laptop stickers. You have one sticker from orientation and you never thought about it again. This question was also forgotten.",
+        "1": "You slightly agree about judging stickers. You've made at least one friend based entirely on a shared sticker. This didn't affect your result at all.",
+        "2": "You strongly agree about judging laptop stickers. You looked at someone's laptop, saw a Vim sticker, and decided their entire personality. This question was decoration, just like those stickers.",
+    },
+    8: { // after graduation
+        "-2": "You strongly disagree about knowing your post-grad plans. The existential dread is real. Also this question was completely fake. Just like your five-year plan.",
+        "-1": "You slightly disagree about post-grad plans. You have a vague idea that involves 'figuring it out.' This question was as directionless as your career path.",
+        "0": "Neutral on post-grad plans. You're not panicking but you're not not panicking. This question didn't count, much like your LinkedIn profile.",
+        "1": "You slightly agree you know your plans. You have a Google Doc titled 'Life Plan' with three bullet points from sophomore year. This didn't matter.",
+        "2": "You strongly agree you know your post-grad plans. You put genuine emotional energy into this answer and it counted for absolutely nothing. Welcome to adulthood.",
+    },
+    9: { // coffee personality
+        "-2": "You strongly disagree that coffee is a personality trait. You're either a tea person or a psychopath. This question was decaf — completely pointless.",
+        "-1": "You slightly disagree about coffee as personality. You drink it but you don't make it your whole identity. Restraint. This was still meaningless though.",
+        "0": "Neutral on coffee as a personality trait. You have no opinion on the most universally opinionated topic on campus. Fascinating. And useless.",
+        "1": "You slightly agree coffee is a personality trait. Your Starbucks order is 'medium coffee' and you think that counts. This didn't count either.",
+        "2": "You strongly agree coffee is a personality trait. Your blood is 40% cold brew and you've told everyone within earshot. This question did nothing but we already knew everything about you.",
+    },
+    11: { // go-to seat
+        "-2": "You strongly disagree about having a go-to seat. You're a free spirit. A wanderer. Also slightly suspicious. This question was as meaningless as your seating arrangement.",
+        "-1": "You slightly disagree about a go-to seat. You have preferences but you won't fight for them. You'll just seethe quietly. This didn't count.",
+        "0": "Neutral on having a go-to seat. You sit wherever. You're the human equivalent of a default setting. This question was also default: useless.",
+        "1": "You slightly agree about a go-to seat. You have a spot but you'll give it up if someone's there. Pushover energy. Also irrelevant.",
+        "2": "You strongly agree about having a go-to seat. You've made eye contact with someone in YOUR seat and considered violence. This question meant nothing but your territorial instincts are noted.",
+    },
+};
+
 let currentQuestion = 0;
 let answers = {};
+let allAnswers = [];
 
 const landingScreen = document.getElementById("landing");
 const quizScreen = document.getElementById("quiz");
@@ -180,20 +247,36 @@ function showResult() {
         '</div>'
     ).join("");
 
+    // Pick a random red herring to roast
+    const herringIndices = Object.keys(redHerringRoasts).map(Number);
+    const nonNeutral = herringIndices.filter(i => allAnswers[i] !== 0);
+    const pool = nonNeutral.length > 0 ? nonNeutral : herringIndices;
+    const picked = pool[Math.floor(Math.random() * pool.length)];
+    const val = allAnswers[picked];
+    const labels = { "-2": "Strongly Disagree", "-1": "Disagree", "0": "Neutral", "1": "Agree", "2": "Strongly Agree" };
+
+    document.getElementById("red-herring-title").textContent = "This question was completely meaningless";
+    document.getElementById("red-herring-question").textContent = '"' + questions[picked].text + '"';
+    document.getElementById("red-herring-answer").textContent = "Your answer: " + labels[val];
+    document.getElementById("red-herring-roast").textContent = redHerringRoasts[picked][val];
+
     showScreen(resultScreen);
 }
 
 beginBtn.addEventListener("click", () => {
     currentQuestion = 0;
     answers = {};
+    allAnswers = [];
     showScreen(quizScreen);
     loadQuestion();
 });
 
 nextBtn.addEventListener("click", () => {
     const q = questions[currentQuestion];
+    const val = parseInt(slider.value);
+    allAnswers.push(val);
     if (q.key) {
-        answers[q.key] = parseInt(slider.value);
+        answers[q.key] = val;
     }
     currentQuestion++;
     if (currentQuestion < questions.length) {
